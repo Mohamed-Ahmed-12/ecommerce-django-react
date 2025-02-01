@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- SEO -->
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="description" content="Amazoon is an online Store. Buy your favourite accessories, auto parts & Secure shopping, cash on delivery, fast shipping, easy free returns within 15 Days. Shop now.">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    </head>
+<body>
+    <h2>Invoice #{{ invoice.invoice_number }}</h2>
+    <p>Dear {{ invoice.order.user.username }},</p>
+    <p>Thank you for your purchase! Please find your invoice attached.</p>
+    <p>Best regards,</p>
+    <p>Amazoon Company</p>
+</body>
+</html>

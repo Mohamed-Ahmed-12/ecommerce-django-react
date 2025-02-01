@@ -1,0 +1,5 @@
+celery -A ecommerceapi worker --loglevel=info  --pool=solo -l info
+
+
+Don't forget to run redis server (redis as message broker)
+C:\Program Files\Redis-x64-3.0.504\redis-server.exe
