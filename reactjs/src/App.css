@@ -1,0 +1,26 @@
+body,
+#root,
+#auth-form {
+    min-height: 100vh;
+}
+body{
+    background-color: whitesmoke;
+}
+#auth-form {
+    background-image: url('https://img.freepik.com/free-photo/black-background-with-gears_23-2149872527.jpg?t=st=1734786805~exp=1734790405~hmac=11cee6485341859c6fe4e81261804957184a9e9ad7d91e6e8a714f526f89dcad&w=1380');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+
+@media (max-width: 768px) {
+    #add-review-col{
+      order: 1;
+    }
+    #reviews-col {
+      order: 2;
+    }
+  }
+
