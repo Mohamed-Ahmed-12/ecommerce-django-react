@@ -46,7 +46,7 @@ EMAIL_USE_SSL = True  # Use SSL for secure connection
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", default=True)
+DEBUG = True
 
 
 # ip of localhost , emulator , pc
