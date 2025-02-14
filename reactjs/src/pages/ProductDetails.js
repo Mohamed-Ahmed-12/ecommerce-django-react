@@ -37,6 +37,15 @@ function ProductDetails() {
         fetchProduct();
     }, [fetchProduct]);
 
+    useEffect(() => {
+        // Cleanup function to hide the modal occurs when the modal backdrop (the dark overlay) is not properly removed when navigating away from the page containing the modal. This can happen if the modal wasn't properly dismissed before the navigation occurred.
+        const modalBackdrop = document.querySelector('.modal-backdrop');
+        if (modalBackdrop) {
+            modalBackdrop.remove(); // Remove the backdrop manually
+        }
+
+    }, []);
+
     const showImgInBox = (src) => {
         if (imgRef.current) {
             imgRef.current.src = src;
@@ -68,7 +77,7 @@ function ProductDetails() {
         image.style.transformOrigin = "center";
     };
 
-    
+
     if (loading) {
         return (
             <div className="container-xxl container-fluid mt-2 border">
@@ -231,7 +240,7 @@ function ProductDetails() {
                     </div>
                     <div className="tab-pane fade show active" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                         <ReviewSection ProductReviews={product.reviews} productId={product.id} />
-                        
+
                     </div>
                 </div>
 

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,25 +22,32 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!f3^exf!j3)j1q30^w*b#r43%i91a$x3co0wf!)xh$2!dy!p=a'
 
-# # Paypal
-# PAYPAL_CLIENT_ID = 'ATrPvmyHsMMUSC8A7g51PUdKoze7qKA3vUppFigXCyAF8-UxwRhtsFT9EKwIvn9fvw6vb6UphwKXRbMx'
-# PAYPAL_SECRET = 'EHne46GoOEn_vwaNQqEaHd1cRap7oigEzSvFHdaWjwpaDmotxPx2UVambFnfvVYB9C5H9tFG5aX2PcEV'
-# PAYPAL_MODE = 'sandbox'  # 'live' for production
+# Initialize environment variables
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('SECRET_KEY')
+
+# Paypal
+PAYPAL_CLIENT_ID = env('PAYPAL_CLIENT_ID')
+PAYPAL_SECRET = env('PAYPAL_SECRET')
+PAYPAL_MODE = env('PAYPAL_MODE')
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP host
-EMAIL_HOST_USER = "ma533869@gmail.com"  # Your email address
-EMAIL_HOST_PASSWORD = "xpxt idtv tvcq bmdp"  # Your email password From App Passwords page in gmail settings
-EMAIL_PORT = 465  # SMTP port
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')  # Your email address
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')  # Your email password From App Passwords page in gmail settings
+EMAIL_PORT = env('EMAIL_PORT')  # SMTP port
 EMAIL_USE_SSL = True  # Use SSL for secure connection
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=True)
+
 
 # ip of localhost , emulator , pc
 ALLOWED_HOSTS = ['*']
@@ -61,6 +69,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     
     'api',
+    'dashboard',
 
 
 ]

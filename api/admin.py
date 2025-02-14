@@ -4,7 +4,7 @@ from .models import Product , Category , Compatibility , FeaturedManufacturer , 
 from django.utils.html import format_html
 # Register your models here.
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id","name","brand","partnumber","quantity","price","condition","thumbnail")
+    list_display = ("name","brand","partnumber","quantity","price","condition","thumbnail")
     # fields = [ ("name","name_ar"),("description" , "description_ar"),("price" , "old_price") , ("image","image2","image3") , "brand" , "compatibility" , "condition" , "quantity" , "partnumber" , "category"] # appear in form
     exclude = ('slug',)
     search_fields = ('name','partnumber','brand')
@@ -15,13 +15,9 @@ class ProductAdmin(admin.ModelAdmin):
         return "http://localhost:3000/product/" + obj.slug
     @admin.display(description="Images")
     def thumbnail(self, instance):
-        if instance.image or instance.image2 or instance.image3:
-            return format_html(f'<img src="{instance.image.url}" style="width:75px; height: 75px; object-fit:cover;border-radius: 15px;"  draggable="false"/> <img src="{instance.image2.url}" style="width:75px; height: 75px; object-fit:cover; border-radius: 15px;" draggable="false"/> <img src="{instance.image3.url}" style="width:75px; height: 75px; object-fit:cover; border-radius: 15px;" draggable="false"/>')
+        if instance.image:
+            return format_html(f'<img src="{instance.image.url}" style="width:75px; height: 75px; object-fit:cover;border-radius: 15px;"  draggable="false"/>')
         return 
-
-
-
-
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -37,10 +33,7 @@ class OrderAdmin(admin.ModelAdmin):
         return format_html(f'{li_elements}')
     
 
-
-
-
-from .models import generate_pdf , send_invoice_email
+from .models import generate_pdf
 class InvoiceAdmin(admin.ModelAdmin):
     list_display = ['file','order']
     list_filter = ('order',)
@@ -54,14 +47,17 @@ class InvoiceAdmin(admin.ModelAdmin):
             if not invoice.file :
                 generate_pdf(invoice.id)
 
+class OrderProductAdmin(admin.ModelAdmin):
+    list_display = ('product', 'order', 'quantity')    
         
 admin.site.register(Product,ProductAdmin)    
-admin.site.register(Order , OrderAdmin)    
-admin.site.register(OrderProduct)
+admin.site.register(Order , OrderAdmin)
+admin.site.register(OrderProduct,OrderProductAdmin)
+admin.site.register(Invoice, InvoiceAdmin)
+
 admin.site.register(ShippingAddress)
 admin.site.register(Payment)    
 admin.site.register(Category)
 admin.site.register(Compatibility)
 admin.site.register(FeaturedManufacturer)
 admin.site.register(Review)
-admin.site.register(Invoice, InvoiceAdmin)

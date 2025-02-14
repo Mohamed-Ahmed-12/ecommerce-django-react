@@ -1,7 +1,5 @@
 
 from django.urls import path , include
-
-from api import query
 from . import views
 from . import payments
 from rest_framework.routers import DefaultRouter
@@ -34,8 +32,7 @@ urlpatterns = [
     path('orders/', views.OrderView.as_view(), name='orders'),
     path('order/payment/', payments.PaymentAPIView.as_view(), name='create_payment'),
     path('execute-payment/', payments.ExecutePaymentAPIView.as_view(), name='execute_payment'),
-    path('test/',views.order_invoice_test , name='test'),
-    path('test1/',query.get_products , name='test1'),
-    path('test2/',query.ProductListView.as_view()),
+
+
     
 ]

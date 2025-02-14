@@ -174,7 +174,6 @@ class Payment(models.Model):
 class Order(models.Model):
     OrderStatus = [
         ('pending', 'Pending'),
-        ('shipped', 'Shipped'),
         ('completed', 'Completed'),
         ('cancelled', 'Cancelled'),
     ]
@@ -197,7 +196,8 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return self.product.name
-
+    
+    @property
     def total_per_item(self):
         return self.product.price * self.quantity
 

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const StatusPadge = ({status='pending'})=>{
     return(
-        status == 'completed' ? <span className="badge bg-success">{status}</span> : <span className="badge bg-secondary">{status}</span>
+        status === 'completed' ? <span className="badge bg-success">{status}</span> : <span className="badge bg-secondary">{status}</span>
     );
 }
 
@@ -38,7 +38,7 @@ export default function Orders() {
         setSelectedOrder(order);
     }
 
-
+    
     if (isLoading) return <Spinner />
 
     return (
@@ -92,7 +92,7 @@ export default function Orders() {
                         </div>
                         <div className="modal-body">
                             <i className="bi bi-file-pdf"></i>
-                            <Link to={`${axiosInstance.defaults.baseURL.replace("/api/", "") + selectedOrder?.invoice.file}`}>Order Invoice</Link>
+                            <Link to={`${axiosInstance.defaults.baseURL.replace("/api/", "") + selectedOrder?.invoice?.file}`}>Order Invoice</Link>
                             <table className="table table-border caption-top">
                                 <thead>
                                     <tr>
@@ -108,7 +108,7 @@ export default function Orders() {
                                         selectedOrder?.items.map((item, index) => (
                                             <tr key={index}>
                                                 <th scope="row">{index + 1}</th>
-                                                <td><Link to={`/product/${item.product.slug}`}>{item.product.name}</Link></td>
+                                                <td><Link to={`/product/${item.product.slug}`} >{item.product.name}</Link></td>
                                                 <td>{item.product.price}</td>
                                                 <td>{item.quantity}</td>
                                                 <td>{item.product.price * item.quantity}</td>

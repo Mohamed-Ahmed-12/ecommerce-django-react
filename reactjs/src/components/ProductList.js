@@ -170,7 +170,7 @@ function ProductList({ filters }) {
                         onChange={(e) => setSearchStr(e.target.value)}
                         required={true}
                     />
-                    <button className="btn text-white" style={{backgroundColor:'#fc5114'}} type="button" onClick={productSearch}>
+                    <button className="btn text-white" style={{backgroundColor:"#ff6c2f"}} type="button" onClick={productSearch}>
                         <i className="bi bi-search"></i>
                     </button>
                 </div>

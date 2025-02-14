@@ -49,9 +49,8 @@ export default function Navbar() {
         }
     };
 
-    // Render loading state while authentication status is being determined
     if (loading) {
-        return <Spinner />; // Replace with a spinner if needed
+        return <Spinner />;
     }
 
     return (
@@ -115,6 +114,10 @@ export default function Navbar() {
                                             👋Welcome {localStorage.getItem('username')}
                                         </a>
                                         <ul className="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownMenuButton1">
+                                            <li>
+                                                <Link to="/profile" className="dropdown-item">
+                                                    <i className="bi bi-person" /> Profile</Link>
+                                            </li>
                                             <li>
                                                 <Link to="/orders" className="dropdown-item">
                                                     <i className="bi bi-list-check" /> Orders</Link>
@@ -194,7 +197,7 @@ export default function Navbar() {
                     </div>
                     <div className='mt-1'>
                         <Link type="button" className='btn btn-dark mt-2 w-100' to='/checkout'>Checkout</Link>
-                        <button type="button" className="btn btn-primary mt-1 w-100 " data-bs-dismiss="offcanvas">Continue Shopping</button>
+                        <Link type="button" className="btn btn-primary mt-1 w-100" to='/cart'>Shopping Cart</Link>
                     </div>
 
                 </div>

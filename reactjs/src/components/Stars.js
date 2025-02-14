@@ -4,7 +4,7 @@ export default function Stars({reviews}) {
     const calculateRate = useMemo(() => {
         if (!reviews?.length) return 0;
         const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
-        return totalRating / reviews.length;
+        return (totalRating / reviews.length).toFixed(1);
     }, [reviews]);
 
     

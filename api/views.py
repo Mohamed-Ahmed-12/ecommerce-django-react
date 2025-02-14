@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 from django.contrib.auth.models import User
@@ -20,10 +20,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
-def order_invoice_test(request):
-    # Get the order object from the request
-    order = Order.objects.filter(status__iexact='completed').last()
-    return render(request , template_name='invoice.html',context={'order':order})
     
 def get_user_from_token(token):
     """Helper method to extract and validate user from token."""
@@ -38,7 +34,6 @@ def get_user_from_token(token):
     except Exception as e:
         print(f"Error: {e}")
         return None
-    
 
 class CustomTokenObtainPairView(TokenObtainPairView):    
     serializer_class = CustomTokenObtainPairSerializer
@@ -62,7 +57,6 @@ class SignupView(APIView):
             return Response({"error": ""}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
       return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
 class LogoutView(APIView):     
    permission_classes = (IsAuthenticated,)     
    def post(self, request):
@@ -73,7 +67,6 @@ class LogoutView(APIView):
         return Response(status=status.HTTP_205_RESET_CONTENT)          
     except Exception as e:               
         return Response({"error": e},status=status.HTTP_400_BAD_REQUEST)
-
 
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -90,8 +83,6 @@ class ProductView(viewsets.ModelViewSet):
     lookup_field = 'slug'
     pagination_class =  StandardResultsSetPagination
     
-      
-        
 class CartView(APIView):
     """
     API view to handle adding products to the cart.
@@ -170,7 +161,7 @@ class CartView(APIView):
             ).first()
             
             if not order:
-                return Response({"error": "No pending order found."}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"error": "No pending order found."}, status=status.HTTP_200_OK)
             
             order_products = order.items.all()
             serializer = OrderProductSerializer(order_products, many=True)
@@ -224,7 +215,6 @@ class CartView(APIView):
         
         except Exception as e:
             return Response({"error": "Could not delete product from cart", "details": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 class ShippingAddressView(APIView):
     authentication_classes = [TokenAuthentication]

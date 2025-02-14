@@ -20,6 +20,9 @@ import Checkout from "./pages/Checkout";
 import { PaymentCancel, PaymentSuccess } from "./pages/Payment";
 import Orders from "./pages/Orders";
 import ConfirmOrderMessage from "./components/ConfirmOrderMessage";
+import Dashboard from "./pages/Dashboard";
+import ShoppingCart from "./pages/ShoppingCart";
+import Profile from "./pages/Profile";
 
 
 // Protected Route Component > allow authenticated user 
@@ -59,12 +62,12 @@ function App() {
 
   // useEffect(() => {
   //       // Cleanup function to hide the modal occurs when the modal backdrop (the dark overlay) is not properly removed when navigating away from the page containing the modal. This can happen if the modal wasn't properly dismissed before the navigation occurred.
-  //       return () => {
+
   //           const modalBackdrop = document.querySelector('.modal-backdrop');
   //           if (modalBackdrop) {
   //               modalBackdrop.remove(); // Remove the backdrop manually
   //           }
-  //       };
+
   //   }, []);
 
   return (
@@ -73,6 +76,7 @@ function App() {
       <BrowserRouter>
         <div className="container-fluid">
           <ToastContainer />
+
           {isAuthenticated && <Nav />}
           
         </div>
@@ -81,8 +85,10 @@ function App() {
           <Route path="/login" element={<PublicRoute><Forms/></PublicRoute>} />
           <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route path="/store" element={<ProtectedRoute><Store/></ProtectedRoute>} />
+          <Route path="/cart" element={<ProtectedRoute><ShoppingCart/></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>} />
           <Route path="/product/:slug" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
-          
           <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
           <Route path="/payment/success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />

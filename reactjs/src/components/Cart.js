@@ -20,12 +20,10 @@ function Cart({ cartItems, fetchCartItems, removeCartItem }) {
 
                             <div className='d-flex flex-column justify-content-between'>
                                 <h6 className=' '>{item.product.name.slice(0, 45)}</h6>
-                                <p className='fw-bold mb-1'><small>${item.product.price}</small></p>
                                 
-                                <div className='d-flex '>
-                                <input type='number' className='form-control form-control-sm me-2 w-50' defaultValue={item.quantity} />
+                                <div className='d-flex justify-content-between'>
+                                <p className='fw-bold mb-1'><small>${item.product.price}</small></p>
                                     <button className='btn btn-sm btn-danger bi bi-trash' onClick={() => { removeCartItem(item.product.id) }}></button>
-
                                 </div>
                             </div>
 

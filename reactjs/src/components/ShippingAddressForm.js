@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const ShippingAddressForm = ({ onSubmit, initialData = {}}) => {
+const ShippingAddressForm = ({ onSubmit, initialData = {} }) => {
     const [formData, setFormData] = useState({
-        email: initialData.email || "",
-        phone: initialData.phone || "",
-        country: initialData.country || "",
-        address: initialData.address || "",
-        state: initialData.state || "",
-        area: initialData.area || "",
+        email: initialData?.email || "",
+        phone: initialData?.phone || "",
+        country: initialData?.country || "",
+        address: initialData?.address || "",
+        state: initialData?.state || "",
+        area: initialData?.area || "",
     });
 
     const handleChange = (e) => {
@@ -20,6 +20,11 @@ const ShippingAddressForm = ({ onSubmit, initialData = {}}) => {
         onSubmit(formData); // Call parent function to handle submission
     };
 
+    useEffect(() => {
+        if (initialData) {
+            setFormData(initialData);
+        }
+    }, [initialData])
     return (
         <div className="border bg-light rounded-2 p-3 mb-3">
             <h4>Shipping Address</h4>
@@ -122,8 +127,8 @@ const ShippingAddressForm = ({ onSubmit, initialData = {}}) => {
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit" className="w-100 btn btn-dark rounded-pill">
-                    Continue to payment
+                <button type="submit" className="w-100 btn btn-dark rounded-pill my-3">
+                    Save
                 </button>
             </form>
         </div>
