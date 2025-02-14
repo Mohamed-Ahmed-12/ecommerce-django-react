@@ -9,7 +9,7 @@ from rest_framework.exceptions import ValidationError
 from django.db import transaction
 import paypalrestsdk
 from .serializers import PaymentSerializer
-
+from django.conf import settings
 def get_user_from_token(token):
     try:
         # Decode the token
@@ -25,8 +25,8 @@ def get_user_from_token(token):
 
 paypalrestsdk.configure({
     "mode": "sandbox",  # 'live' for production
-    "client_id": "ATrPvmyHsMMUSC8A7g51PUdKoze7qKA3vUppFigXCyAF8-UxwRhtsFT9EKwIvn9fvw6vb6UphwKXRbMx",
-    "client_secret": "EHne46GoOEn_vwaNQqEaHd1cRap7oigEzSvFHdaWjwpaDmotxPx2UVambFnfvVYB9C5H9tFG5aX2PcEV"
+    "client_id": settings.PAYPAL_CLIENT_ID,
+    "client_secret": settings.PAYPAL_SECRET
 })
 
 class PaymentAPIView(APIView):
