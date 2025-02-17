@@ -91,8 +91,12 @@ export default function Orders() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <i className="bi bi-file-pdf"></i>
-                            <Link to={`${axiosInstance.defaults.baseURL.replace("/api/", "") + selectedOrder?.invoice?.file}`}>Order Invoice</Link>
+                            {
+                                selectedOrder?.invoice?.file &&
+                                
+                                <><i className="bi bi-file-pdf"></i><Link to={`${axiosInstance.defaults.baseURL.replace("/api/", "") + selectedOrder?.invoice?.file}`}>Order Invoice</Link></>
+                            }
+
                             <table className="table table-border caption-top">
                                 <thead>
                                     <tr>

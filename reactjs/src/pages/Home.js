@@ -10,6 +10,7 @@ import assistance from '../assets/img/assistance.png';
 import twintyFour from '../assets/img/24-hour-clock.png';
 import securePayment from '../assets/img/secure-payments.png';
 import freeShipping from '../assets/img/shipping.png';
+import Brands from "../components/Brands";
 
 
 export default function Home() {
@@ -57,52 +58,11 @@ export default function Home() {
             {/* <!-- Categories --> */}
             <Categories />
 
-            {/* <!-- Featured Products Section --> */}
+            {/* <!-- Brands Section --> */}
             <section className="my-5 bg-light py-5">
-                <div className="container" id="featured-section">
-                    <h2 className="text-center mb-4" style={{ fontFamily: "fantasy" }}>Featured Products</h2>
-                    <div className="row g-4">
-                        <div className="col-md-3">
-                            <div className="card product-card">
-                                <img src="https://via.placeholder.com/400x300?text=Product+1" className="card-img-top" alt="Product 1" />
-                                <div className="card-body text-center">
-                                    <h6 className="card-title">Product 1</h6>
-                                    <p className="fw-bold">$50.00</p>
-                                    <a href="#" className="btn btn-primary btn-sm">Add to Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="card product-card">
-                                <img src="https://via.placeholder.com/400x300?text=Product+2" className="card-img-top" alt="Product 2" />
-                                <div className="card-body text-center">
-                                    <h6 className="card-title">Product 2</h6>
-                                    <p className="fw-bold">$70.00</p>
-                                    <a href="#" className="btn btn-primary btn-sm">Add to Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="card product-card">
-                                <img src="https://via.placeholder.com/400x300?text=Product+3" className="card-img-top" alt="Product 3" />
-                                <div className="card-body text-center">
-                                    <h6 className="card-title">Product 3</h6>
-                                    <p className="fw-bold">$80.00</p>
-                                    <a href="#" className="btn btn-primary btn-sm">Add to Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="card product-card">
-                                <img src="https://via.placeholder.com/400x300?text=Product+4" className="card-img-top" alt="Product 4" />
-                                <div className="card-body text-center">
-                                    <h6 className="card-title">Product 4</h6>
-                                    <p className="fw-bold">$100.00</p>
-                                    <a href="#" className="btn btn-primary btn-sm">Add to Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="container" id="brands">
+                    <h2 className="text-center mb-4" style={{ fontFamily: "fantasy" }}>Brands</h2>
+                    <Brands />
                 </div>
             </section>
 
