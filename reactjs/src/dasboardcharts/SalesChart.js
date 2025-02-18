@@ -21,9 +21,9 @@ const SalesChart = ({dataset}) => {
   
 
   return (
-    <div>
+    <>
       <Bar data={chartData} options={{ responsive: true }} />
-    </div>
+    </>
   );
 };
 

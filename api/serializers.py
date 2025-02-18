@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Product , Category , OrderProduct , ShippingAddress , Payment , Order , FeaturedManufacturer , Compatibility , Invoice , Review
+from .models import Product , Category , OrderProduct , ShippingAddress , Payment , Order , FeaturedManufacturer , Compatibility , Invoice , Review , ProductPriceHistory
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
@@ -97,3 +97,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = "__all__"
         
+class ProductPriceHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductPriceHistory
+        fields = ['changed_at','new_price']

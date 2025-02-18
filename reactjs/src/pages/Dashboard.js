@@ -9,6 +9,7 @@ import OrderStatus from '../dasboardcharts/OrderStatus';
 import RecentOrders from '../dasboardcharts/RecentOrders';
 import '../dash.css';
 import SalesChart from '../dasboardcharts/SalesChart';
+import ProductsPriceHistory from '../dasboardcharts/ProductsPriceHistory';
 export default function Dashboard() {
     const styleHeaderOfCard = {
         fontFamily: 'sans-serif',
@@ -118,6 +119,13 @@ export default function Dashboard() {
                 <div className="col bg-white rounded p-3">
                     <h5>Sales</h5>
                     <SalesChart dataset={data?.sales}/>
+                </div>
+            </div>
+
+            <div className="row my-5">
+                <div className="col bg-white rounded p-3">
+                    <h5 className=''>Proucts Price History</h5>
+                    <ProductsPriceHistory dataset={data?.product_history}/>
                 </div>
             </div>
 

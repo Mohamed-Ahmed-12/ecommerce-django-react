@@ -94,7 +94,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="col d-flex flex-row p-2 m-3 bg-white rounded shadow-2" data-aos="fade-in">
-                            <img src={freeShipping} alt="Free Shipping" style={{width:"90px",height:"90px"}}/>
+                            <img src={freeShipping} alt="Free Shipping" style={{width:"120px",height:"90px"}}/>
                             <div className="d-flex flex-column justify-content-around mx-1">
                                 <h6 className="fw-bold">Free Shipping</h6>
                             <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>

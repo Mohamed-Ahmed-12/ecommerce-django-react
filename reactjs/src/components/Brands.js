@@ -48,8 +48,8 @@ export default function Brands() {
             <img 
               src={brand.img} 
               alt={brand.name} 
-              className="object-fit-fill" 
-              height={'100px'} 
+              className="object-fit-contain" 
+              height={'110px'} 
               width={'auto'} 
             />
           </div>

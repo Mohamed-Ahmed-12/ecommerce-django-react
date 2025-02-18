@@ -2,7 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from datetime import datetime
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save , pre_save
 from django.dispatch import receiver
 import random
 import string
@@ -212,6 +212,28 @@ class Invoice(models.Model):
     file = models.FileField(upload_to='invoices', blank=True, null=True)
 
 
+class ProductPriceHistory(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="price_history")
+    old_price = models.DecimalField(max_digits=10, decimal_places=2)
+    new_price = models.DecimalField(max_digits=10, decimal_places=2)
+    changed_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = 'Product Price History'
+    def __str__(self):
+        return self.product.name
+    
+
+
+@receiver(pre_save, sender=Product)
+def track_price_changes(sender, instance, **kwargs):
+    if instance.pk:  # If the product exists
+        old_product = Product.objects.get(pk=instance.pk)
+        if old_product.price != instance.price:
+            ProductPriceHistory.objects.create(
+                product=instance,
+                old_price=old_product.price,
+                new_price=instance.price,
+            )
 # Tasks
 @shared_task
 def generate_pdf(invoice_id):

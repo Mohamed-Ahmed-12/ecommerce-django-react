@@ -1,6 +1,17 @@
 
 from django.contrib import admin
-from .models import Product , Category , Compatibility , FeaturedManufacturer , Order , OrderProduct ,  Payment  , ShippingAddress , Invoice  , Review
+from .models import( Product , 
+                     Category , 
+                     Compatibility , 
+                     FeaturedManufacturer , 
+                     Order , 
+                     OrderProduct ,  
+                     Payment  , 
+                     ShippingAddress , 
+                     Invoice  , 
+                     Review,
+                     ProductPriceHistory
+                    )
 from django.utils.html import format_html
 # Register your models here.
 class ProductAdmin(admin.ModelAdmin):
@@ -61,3 +72,4 @@ admin.site.register(Category)
 admin.site.register(Compatibility)
 admin.site.register(FeaturedManufacturer)
 admin.site.register(Review)
+admin.site.register(ProductPriceHistory)

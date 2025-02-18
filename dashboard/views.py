@@ -1,11 +1,12 @@
-from api.models import Product , Order ,OrderProduct , Payment
+from django.shortcuts import get_object_or_404
+from api.models import Product , Order ,OrderProduct , Payment , ProductPriceHistory
 from django.db.models import Sum, Count, F , Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User
-from api.serializers import OrderSerializer
+from api.serializers import OrderSerializer , ProductPriceHistorySerializer
 from api.views import get_user_from_token
 from rest_framework.exceptions import ValidationError
 
@@ -73,6 +74,7 @@ class DashboardView(APIView):
                 completed=Count('id', filter=Q(status='completed')),
                 cancelled=Count('id', filter=Q(status='cancelled'))
             )
+
             # Prepare response data
             data = {
                 'products_price': products.get('total', 0),  # Total price for products in stock
@@ -86,8 +88,66 @@ class DashboardView(APIView):
                 'payment_methods':payment_methods,
                 'products_availability':products_availability,
                 'order_status':order_status,
-                
             }
             return Response(data, status=status.HTTP_200_OK)
         except Exception as ex:
             return Response({"error": str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ProductsPriceHistoryView(APIView):
+    permission_classes = [IsAdminUser]
+    def get(self, request):
+        try:
+            auth_header = request.headers.get('Authorization')
+            if not auth_header or ' ' not in auth_header:
+                raise ValidationError("Authorization header is missing or malformed.")
+            
+            token = auth_header.split(' ')[1]
+            user = get_user_from_token(token)
+
+            if not user:
+                raise ValidationError("Invalid or expired token.")
+            
+            # Products Price History
+            products_price_history = ProductPriceHistory.objects.values('product__name','new_price','changed_at')
+            # Convert datetime to string for JSON serialization
+            history = {}
+            for entry in products_price_history:
+                product_name = entry["product__name"]
+                if product_name not in history:
+                    history[product_name] = {"dates": [], "prices": []}
+
+                history[product_name]["dates"].append(entry["changed_at"].strftime("%Y-%m-%d"))  # Format date
+                history[product_name]["prices"].append(float(entry["new_price"]))  # Ensure decimal is float
+            data = {
+                'products':Product.objects.all().values('id','name'),
+                'products_price_history': history,
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        except Exception as ex:
+            return Response({"error": str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def post(self, request):
+        """ get specific product history for specific product """
+        try:
+            auth_header = request.headers.get('Authorization')
+            if not auth_header or ' ' not in auth_header:
+                raise ValidationError("Authorization header is missing or malformed.")
+            
+            token = auth_header.split(' ')[1]
+            user = get_user_from_token(token)
+
+            if not user:
+                raise ValidationError("Invalid or expired token.")
+            
+            # Access Product Id 
+            id = request.data.get('id',None)
+            
+            product = get_object_or_404(Product, id=id)
+            
+            product_price_history = ProductPriceHistory.objects.filter(product=product)
+            return Response(data = ProductPriceHistorySerializer(product_price_history,many=True).data, status=status.HTTP_200_OK)
+
+        except Exception as ex:
+            return Response({"error": str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
