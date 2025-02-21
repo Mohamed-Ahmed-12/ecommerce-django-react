@@ -54,22 +54,8 @@ export default function Navbar() {
     }
 
     return (
-        <>
-            {/* <!-- Top Section --> */}
-            <div className="container-fluid py-2 bg-dark text-white">
-                <div className="d-flex justify-content-between align-items-center">
-                    <div className="contact-info">
-                        <span><i className="bi bi-phone me-2"></i>+123 456 7890</span>
-                        <span className="ms-3"><i className="bi bi-map me-2"></i>123 E-commerce St, Shop City</span>
-                    </div>
-                    <div className="social-icons">
-                        <a href="#" className="text-white me-3"><i className="bi bi-facebook"></i></a>
-                        <a href="#" className="text-white"><i className="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <nav className="navbar navbar-expand-lg bg-body-tertiary ">
+        <> 
+            <nav className="navbar navbar-expand-lg bg-light ">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/" style={{ fontFamily: "sans-serif" }}>
                     <img src="https://static.vecteezy.com/system/resources/previews/016/471/452/non_2x/abstract-modern-ecommerce-logo-ecommerce-logo-design-shop-logo-design-template-creative-ecommerce-logo-vector.jpg" alt="" width="50" height="50" />

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User
-from api.serializers import OrderSerializer , ProductPriceHistorySerializer
+from api.serializers import ProductPriceHistorySerializer
 from api.views import get_user_from_token
 from rest_framework.exceptions import ValidationError
 
@@ -41,9 +41,6 @@ class DashboardView(APIView):
 
             # Total users
             users_count = User.objects.count()
-            
-            # Recent Orders
-            recent_orders = Order.objects.order_by('-id')[:5]
             
             # Aggregating total quantity sold per product
             sales_data = (
@@ -83,7 +80,6 @@ class DashboardView(APIView):
                 'completed_orders_count': completed_order.get('count', 0),
                 'revenue': completed_order.get('total_revenue', 0) or 0,  # Total price for products in completed orders
                 'users_count': users_count,
-                'recent_orders': OrderSerializer(recent_orders, many=True).data,
                 'sales':{'labels':labels , 'total':total},
                 'payment_methods':payment_methods,
                 'products_availability':products_availability,

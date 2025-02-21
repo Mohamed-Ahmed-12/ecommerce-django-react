@@ -23,14 +23,15 @@ import ConfirmOrderMessage from "./components/ConfirmOrderMessage";
 import Dashboard from "./pages/Dashboard";
 import ShoppingCart from "./pages/ShoppingCart";
 import Profile from "./pages/Profile";
+import Footer from "./components/Footer";
 
 
 // Protected Route Component > allow authenticated user 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated , loading } = useAuthContext();
+  const { isAuthenticated, loading } = useAuthContext();
   if (loading) {
     return <div>Loading...</div>; // Show a loading spinner or message
-}
+  }
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
 
@@ -46,7 +47,7 @@ const PublicRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuthContext();
 
   if (loading) {
-      return <div>Loading...</div>; // Show a loading spinner or message
+    return <div>Loading...</div>; // Show a loading spinner or message
   }
   // Redirect to home if already authenticated
   if (isAuthenticated) {
@@ -73,29 +74,29 @@ function App() {
   return (
 
     <CartProvider>
-      <BrowserRouter>
-        <div className="container-fluid">
+      <div className="container-fluid">
+        <BrowserRouter>
           <ToastContainer />
-
           {isAuthenticated && <Nav />}
-          
-        </div>
-        <Routes>
-          <Route path="*" element={<Error404 />} />          
-          <Route path="/login" element={<PublicRoute><Forms/></PublicRoute>} />
-          <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>} />
-          <Route path="/store" element={<ProtectedRoute><Store/></ProtectedRoute>} />
-          <Route path="/cart" element={<ProtectedRoute><ShoppingCart/></ProtectedRoute>} />
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>} />
-          <Route path="/product/:slug" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
-          <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-          <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
-          <Route path="/payment/success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
-          <Route path="/payment/cancel" element={<ProtectedRoute><PaymentCancel  /></ProtectedRoute>} />
-          <Route path="/order/success" element={<ProtectedRoute><ConfirmOrderMessage  /></ProtectedRoute>} />
-        </Routes>
-      </BrowserRouter>
+          <Routes>
+            <Route path="*" element={<Error404 />} />
+            <Route path="/login" element={<PublicRoute><Forms /></PublicRoute>} />
+            <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/store" element={<ProtectedRoute><Store /></ProtectedRoute>} />
+            <Route path="/cart" element={<ProtectedRoute><ShoppingCart /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/product/:slug" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
+            <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+            <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+            <Route path="/payment/success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
+            <Route path="/payment/cancel" element={<ProtectedRoute><PaymentCancel /></ProtectedRoute>} />
+            <Route path="/order/success" element={<ProtectedRoute><ConfirmOrderMessage /></ProtectedRoute>} />
+          </Routes>
+        </BrowserRouter>
+        {/* <!-- Footer --> */}
+        <Footer />
+      </div>
     </CartProvider>
 
   );

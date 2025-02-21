@@ -50,7 +50,7 @@ export default function Brands() {
               alt={brand.name} 
               className="object-fit-contain" 
               height={'110px'} 
-              width={'auto'} 
+              min-width={'100px'} 
             />
           </div>
         </SwiperSlide>

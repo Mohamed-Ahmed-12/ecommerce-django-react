@@ -222,7 +222,17 @@ class ProductPriceHistory(models.Model):
     def __str__(self):
         return self.product.name
     
-
+class ContactUs(models.Model):
+    name = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(max_length=50, blank=True, null=True)
+    subject = models.CharField(max_length=100, blank=True, null=True)
+    message = models.TextField(max_length=500, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = 'Contact Us'
+        def __str__(self):
+            return self.name
+        
 
 @receiver(pre_save, sender=Product)
 def track_price_changes(sender, instance, **kwargs):

@@ -148,7 +148,6 @@ export default function Store() {
                   {/* Brands */}
                   <div className="my-3 border-top">
                     <h5 className="my-2" style={{ fontFamily: "sans-serif" }}>Brands</h5>
-                    {error && <span className="text-danger">{error}</span>}
                     {brands.map((brand) => (
                       <div key={brand.id}>
                         <input
@@ -170,6 +169,7 @@ export default function Store() {
                   {/* Price Range */}
                   <div className="my-3 border-top">
                     <h5 className="my-2" style={{ fontFamily: "sans-serif" }}>Price Range</h5>
+                    {error && <span className="text-danger">{error}</span>}
                     <div className="input-group">
                       <input
                         type="number"

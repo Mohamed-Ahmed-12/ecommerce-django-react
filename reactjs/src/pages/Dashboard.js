@@ -6,7 +6,6 @@ import PaymentsChart from '../dasboardcharts/PaymentsChart';
 import axiosinstance from '../components/axiosInstance'
 import ProductAvailability from '../dasboardcharts/ProductAvailability';
 import OrderStatus from '../dasboardcharts/OrderStatus';
-import RecentOrders from '../dasboardcharts/RecentOrders';
 import '../dash.css';
 import SalesChart from '../dasboardcharts/SalesChart';
 import ProductsPriceHistory from '../dasboardcharts/ProductsPriceHistory';
@@ -23,7 +22,8 @@ export default function Dashboard() {
         color: "#ff6c2f",
         backgroundColor: "rgb(250, 212, 194)",
         height: "auto",
-        width: "auto"
+        width: "auto",
+        fontWeight:'10px'
     }
     const [data, setData] = useState(null);
     useEffect(() => {
@@ -38,6 +38,11 @@ export default function Dashboard() {
     }, [])
     return (
         <div className="container mt-3" >
+            <div className='row'>
+                <div className='col-12'>
+                    <h4 className='d-inline-block p-1' style={{borderBottom:'3px rgb(255, 108, 47) solid'}}>Dashboard</h4>
+                </div>
+            </div>
             <div className='row row-cols-sm-2 row-cols-md-4 row-cols-1 bg-white p-3 rounded my-3'>
                 <div className='col'>
                     <div className="card mb-3">
@@ -99,6 +104,13 @@ export default function Dashboard() {
                 </div>
             </div>
 
+            <div className="row my-5">
+                <div className="col bg-white rounded p-3">
+                    <h5 className=''>Proucts Price History</h5>
+                    <ProductsPriceHistory dataset={data?.product_history}/>
+                </div>
+            </div>
+
             <div className="row gap-3 my-5">
 
                 <div className="col d-flex justify-content-center bg-white rounded p-3">
@@ -122,20 +134,6 @@ export default function Dashboard() {
                 </div>
             </div>
 
-            <div className="row my-5">
-                <div className="col bg-white rounded p-3">
-                    <h5 className=''>Proucts Price History</h5>
-                    <ProductsPriceHistory dataset={data?.product_history}/>
-                </div>
-            </div>
-
-            
-            <div className="row my-5">
-                <div className="col bg-white rounded p-3">
-                    <h5>Recent Orders</h5>
-                    <RecentOrders orders={data?.recent_orders}/>
-                </div>
-            </div>
         </div>
     )
 }
