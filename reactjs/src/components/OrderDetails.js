@@ -1,76 +1,54 @@
-import React from 'react'
+import React from "react";
+import { FaUser, FaPhone, FaEnvelope, FaMapMarkerAlt, FaGlobe, FaCreditCard, FaDollarSign, FaCalendar } from "react-icons/fa";
 
-export default function OrderDetails({shippingAddress , orderPayment}) {
+export default function OrderDetails({ shippingAddress, orderPayment }) {
+  // Format currency (Assuming USD, change as needed)
+  const formatPrice = (amount) =>
+    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amount);
+
+  // Format date
+  const formatDate = (dateString) => new Date(dateString).toLocaleDateString();
+
   return (
-    <div className="row g-4">
-        <div className="col-md-12">
-            <div className="card shadow-sm">
-                <div className="card-header bg-primary text-white">
-                    <h5 className="mb-0">Shipping Address</h5>
-                </div>
-                <div className="card-body">
-                    <div className="row mb-3">
-                        <div className="col-6">
-                            <h6 className="fw-bold">Name:</h6>
-                            <p className="text-muted">{shippingAddress.user.username}</p>
-                        </div>                        
-                        <div className="col-6">
-                            <h6 className="fw-bold">Phone:</h6>
-                            <p className="text-muted">{shippingAddress.phone}</p>
-                        </div>
-
-
-                        <div className="col-6">
-                            <h6 className="fw-bold">Email:</h6>
-                            <p className="text-muted">{shippingAddress.email}</p>
-                        </div>
-                        <div className="col-6">
-                            <h6 className="fw-bold">Address:</h6>
-                            <p className="text-muted">{shippingAddress.address}</p>
-                        </div>
-
-                        <div className="col-6">
-                            <h6 className="fw-bold">Country:</h6>
-                            <p className="text-muted">{shippingAddress.country}</p>
-                        </div>
-                        <div className="col-6">
-                            <h6 className="fw-bold">State:</h6>
-                            <p className="text-muted">{shippingAddress.state}</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+    <div className="container">
+      <div className="row g-4">
+        
+        {/* Shipping Address Section */}
+        <div className="col-md-6">
+          <div className="p-3 text-white text-center"
+               style={{ background: "linear-gradient(135deg, #007bff, #6610f2)", borderRadius: "5px" }}>
+            <h5 className="mb-0 fw-bold">
+              <FaMapMarkerAlt className="me-2" /> Shipping Details
+            </h5>
+          </div>
+          
+          <div className="p-3 mt-2 border rounded">
+            <p><FaUser className="text-primary me-2" /> <strong>Name:</strong> {shippingAddress.user.username}</p>
+            <p><FaPhone className="text-primary me-2" /> <strong>Phone:</strong> {shippingAddress.phone}</p>
+            <p><FaEnvelope className="text-primary me-2" /> <strong>Email:</strong> {shippingAddress.email}</p>
+            <p><FaMapMarkerAlt className="text-primary me-2" /> <strong>Address:</strong> {shippingAddress.address}</p>
+            <p><FaGlobe className="text-primary me-2" /> <strong>Country:</strong> {shippingAddress.country}</p>
+            <p><FaGlobe className="text-primary me-2" /> <strong>State:</strong> {shippingAddress.state}</p>
+          </div>
         </div>
-        <div className="col-md-12">
-            <div className="card shadow-sm mb-4">
-                <div className="card-header bg-primary text-white">
-                    <h5 className="mb-0">Payment Information</h5>
-                </div>
-                <div className="card-body">
-                    <div className="row mb-3">
-                        <div className="col-6">
-                            <h6 className="fw-bold">Payment Method:</h6>
-                            <p className="text-muted">{orderPayment.payment_method}</p>
-                        </div>
-                        <div className="col-6">
-                            <h6 className="fw-bold">Payment Status:</h6>
-                            <p className="text-muted">{orderPayment.payment_status}</p>
-                        </div>
 
-                        <div className="col-6">
-                            <h6 className="fw-bold">Total Amount:</h6>
-                            <p className="text-muted">{orderPayment.total}</p>
-                        </div>
-                        <div className="col-6">
-                            <h6 className="fw-bold">Payment Date:</h6>
-                            <p className="text-muted">{orderPayment.created_at}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        {/* Payment Information Section */}
+        <div className="col-md-6">
+          <div className="p-3 text-white text-center"
+               style={{ background: "linear-gradient(135deg, #28a745, #155724)", borderRadius: "5px" }}>
+            <h5 className="mb-0 fw-bold">
+              <FaCreditCard className="me-2" /> Payment Summary
+            </h5>
+          </div>
+
+          <div className="p-3 mt-2 border rounded">
+            <p><FaCreditCard className="text-success me-2" /> <strong>Payment Method:</strong> {orderPayment.payment_method}</p>
+            <p><FaCreditCard className="text-success me-2" /> <strong>Payment Status:</strong> {orderPayment.payment_status}</p>
+            <p><FaDollarSign className="text-success me-2" /> <strong>Total Amount:</strong> {formatPrice(orderPayment.total)}</p>
+            <p><FaCalendar className="text-success me-2" /> <strong>Payment Date:</strong> {formatDate(orderPayment.created_at)}</p>
+          </div>
         </div>
+      </div>
     </div>
-
-  )
+  );
 }

@@ -12,8 +12,12 @@ from .models import( Product ,
                      Review,
                      ProductPriceHistory
                     )
-from django.utils.html import format_html
 # Register your models here.
+from django.templatetags.static import static
+from django.utils.html import format_html
+from .models import generate_pdf
+
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("name","brand","partnumber","quantity","price","condition","thumbnail")
     # fields = [ ("name","name_ar"),("description" , "description_ar"),("price" , "old_price") , ("image","image2","image3") , "brand" , "compatibility" , "condition" , "quantity" , "partnumber" , "category"] # appear in form
@@ -30,12 +34,16 @@ class ProductAdmin(admin.ModelAdmin):
             return format_html(f'<img src="{instance.image.url}" style="width:75px; height: 75px; object-fit:cover;border-radius: 15px;"  draggable="false"/>')
         return 
 
-
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user', 'payment', 'status' , 'get_items')
+    list_display = ('id','user', 'payment', 'status' , 'get_items')
     list_filter = ('status',)
     date_hierarchy = "created_at"
-
+    class Media:
+        css = {
+            'all': (static('admin_styles.css'),)  # Load custom CSS
+        }
+        js = (static('admin_scripts.js'),)  # Load the custom JavaScript 
+        
     @admin.display(description="Order Items")
     def get_items(self , instance):
         li_elements = ''
@@ -44,7 +52,6 @@ class OrderAdmin(admin.ModelAdmin):
         return format_html(f'{li_elements}')
     
 
-from .models import generate_pdf
 class InvoiceAdmin(admin.ModelAdmin):
     list_display = ['file','order']
     list_filter = ('order',)

@@ -7,6 +7,7 @@ import Spinner from '../components/Spinner';
 import { toast } from "react-toastify";
 import OrderDetails from '../components/OrderDetails';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaCheck, FaDollarSign, FaReceipt, FaShoppingBag, FaShoppingCart, FaTimes, FaTruck } from 'react-icons/fa';
 
 export default function Checkout() {
     const { cartItems, fetchCartItems } = useCart();
@@ -87,25 +88,28 @@ export default function Checkout() {
     }, []);
 
     const handlePayment = async (paymentOption) => {
-        try {
-            const token = localStorage.getItem("access_token");
-            const total = (subTotal + shipping).toFixed(2)
-            const response = await axiosInstance.post('order/payment/', { total, paymentOption },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`, // Correctly set the Authorization header
-                    },
+        const result = window.confirm(`Are you sure to pay with ${paymentOption} ?`);
+        if (result) {
+            try {
+                const token = localStorage.getItem("access_token");
+                const total = (subTotal + shipping).toFixed(2)
+                const response = await axiosInstance.post('order/payment/', { total, paymentOption },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`, // Correctly set the Authorization header
+                        },
+                    }
+                );
+
+                toast.success('Payment Successfully ')
+                setIsPaid(true);
+                if (response.data.approval_url) {
+                    window.location.href = response.data.approval_url; // Redirect to PayPal approval page
                 }
-            );
-            
-            toast.success('Payment Successfully ')
-            setIsPaid(true);
-            if (response.data.approval_url) {
-                window.location.href = response.data.approval_url; // Redirect to PayPal approval page
+            } catch (e) {
+                console.error(e);
+                toast.error('Sorry something Wrong in Payment ')
             }
-        } catch (e) {
-            console.error(e);
-            toast.error('Sorry something Wrong in Payment ')
         }
 
     };
@@ -113,17 +117,18 @@ export default function Checkout() {
     useEffect(() => {
         if (cartItems && cartItems.length > 0) {
             fetchShippingAddress();
+            fetchOrderPayment();
         } else {
             setIsLoading(false); // Stop loading spinner if no cart items
         }
-    }, [cartItems, fetchShippingAddress]);
+    }, [cartItems, fetchShippingAddress, fetchOrderPayment]);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(isPaid)
-        if (isPaid){
+        if (isPaid) {
             fetchOrderPayment();
         }
-    },[isPaid])
+    }, [isPaid])
 
     const confirmOrder = async () => {
         setIsLoading(true); // Show spinner
@@ -142,6 +147,12 @@ export default function Checkout() {
         }
     };
 
+    const cancelOrder = async () => {
+        const result = window.confirm("Are you sure to cancel this order ?");
+        if (result) {
+            toast.success("Cancelled Successfully!", { position: "top-right" });
+        }
+    }
     if (isLoading) return <div className="container mt-5"> <Spinner /> </div>;
 
     if (!cartItems || cartItems.length === 0) {
@@ -159,71 +170,80 @@ export default function Checkout() {
 
 
     return (
-        <div className='container'>
+        <div className='container vh-100'>
             <h3 className='mt-3'>Checkout</h3>
             <div className='row mt-3'>
                 <div className='col-sm-12 col-xl-8'>
                     {
-                        shippingAddress != null ?
-                            (orderPayment ? <OrderDetails shippingAddress={shippingAddress} orderPayment={orderPayment} /> :
-                                <div className='border bg-light rounded-2 p-3 mb-3'>
-                                    <h4>Payment Options</h4>
-                                    <input type="image" className='form-control mt-3' style={{ width: "100px", height: "50px", objectFit: "cover" }} onClick={() => handlePayment("paypal")} src="https://cdn-icons-png.flaticon.com/512/196/196566.png"
-                                        alt="pay-using-paypal" id="paypal-btn" />
-                                    <input type="image" className='form-control mt-3' style={{ width: "100px", height: "50px", objectFit: "cover" }} onClick={() => handlePayment("cod")} src="https://png.pngtree.com/png-clipart/20220603/original/pngtree-red-badge-cod-cash-on-delivery-png-image_7900047.png"
-                                        alt="cod" id="cod-btn" />
-                                </div>
+                        shippingAddress ?
+                            (
+                                orderPayment ? <OrderDetails shippingAddress={shippingAddress} orderPayment={orderPayment} /> :
+                                    <div className='border bg-light rounded-2 p-3 mb-3'>
+                                        <h4>Payment Options</h4>
+                                        <input type="image" className='form-control mt-3' style={{ width: "100px", height: "50px", objectFit: "cover" }} onClick={() => handlePayment("paypal")} src="https://cdn-icons-png.flaticon.com/512/196/196566.png"
+                                            alt="pay-using-paypal" id="paypal-btn" />
+                                        <input type="image" className='form-control mt-3' style={{ width: "100px", height: "50px", objectFit: "cover" }} onClick={() => handlePayment("cod")} src="https://png.pngtree.com/png-clipart/20220603/original/pngtree-red-badge-cod-cash-on-delivery-png-image_7900047.png"
+                                            alt="cod" id="cod-btn" />
+                                    </div>
                             ) :
                             <ShippingAddressForm onSubmit={ShippingAddressFormSubmit} initialData={shippingAddress || {}} />
                     }
                 </div>
-                {/* Order Summary */}
-                <div className='col-sm-12 col-xl-4'>
-                    <div className="card shadow-sm">
-                        <div className="card-header bg-primary text-white">
-                            <h5 className="mb-0">Order Summary</h5>
+                {/* Order Summary Section */}
+                <div className="col-md-4">
+                    <div className="p-3 text-white text-center"
+                        style={{ background: "linear-gradient(135deg, #007bff, #0056b3)", borderRadius: "5px" }}>
+                        <h5 className="mb-0 fw-bold">
+                            <FaShoppingCart className="me-2" /> Order Summary
+                        </h5>
+                    </div>
+
+                    <div className="p-3 mt-2 border rounded">
+                        {cartItems && cartItems.length > 0 ? (
+                            cartItems.map((item) => (
+                                <div key={item.id} className="d-flex align-items-center py-2 border-bottom">
+                                    <img src={`${axiosInstance.defaults.baseURL.replace("/api/", "") + item.product.image}`}
+                                        style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "5px" }}
+                                        alt={item.product.name}
+                                        className='img-thumbnail' />
+                                    <div className='ms-3 flex-grow-1'>
+                                        <span className="fw-bold">{item.product.name}</span>
+                                        <div className="text-muted small">Price: ${item.product.price}</div>
+                                        <div className="text-muted small">Qty: {item.quantity}</div>
+                                    </div>
+                                    <span className="fw-bold text-success">${(item.quantity * item.product.price).toFixed(2)}</span>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-center text-muted">No items in cart</p>
+                        )}
+
+                        <div className="mt-3">
+                            <p><FaTruck className="text-primary me-2" /> <strong>Shipping:</strong> ${shipping.toFixed(2)}</p>
+                            <p><FaDollarSign className="text-primary me-2" /> <strong>Sub Total:</strong> ${subTotal.toFixed(2)}</p>
+                            <p className="fw-bold fs-5 border-top pt-2">
+                                <FaReceipt className="text-danger me-2" /> Total (USD): <span className="text-danger">${(shipping + subTotal).toFixed(2)}</span>
+                            </p>
                         </div>
-                        <div className="card-body">
+                        {
+                            cartItems.length > 0 &&
+                            <button className="btn btn-outline-danger w-100 mt-3" onClick={cancelOrder}>
+                                <FaTimes className="me-2" /> Cancel Order
+                            </button>
+                        }
 
-                            <ul className='list-group'>
-                                {
-                                    cartItems && cartItems.length > 0 ?
-                                        cartItems.map((item) => (
-                                            <li className="list-group-item d-flex" key={item.id}>
-                                                <img src={`${axiosInstance.defaults.baseURL.replace("/api/", "") + item.product.image}`} style={{ width: "75px", height: "75px" }} alt={item.name} className='img-thumbnail' />
-                                                <div className='d-flex flex-column ms-4'>
-                                                    <span className="text-muted fw-bold">Total ${(item.quantity * item.product.price).toFixed(2)}</span>
-                                                    <small className="text-muted">Price ${item.product.price}</small>
-                                                    <small className="text-muted">Qty {item.quantity}</small>
-                                                </div>
-
-                                            </li>
-                                        ))
-                                        :
-                                        <></>
-                                }
-                            </ul>
-                            <ul className='list-group my-3'>
-                                <li className="list-group-item d-flex justify-content-between">
-                                    <span>Shipping:</span>
-                                    <span>${shipping.toFixed(2)}</span>
-                                </li>
-                                <li className="list-group-item d-flex justify-content-between">
-                                    <span>Sub Total:</span>
-                                    <span>${subTotal.toFixed(2)}</span>
-                                </li>
-                                <li className="list-group-item d-flex justify-content-between">
-                                    <span>Total (USD):</span>
-                                    <strong>${(shipping + subTotal).toFixed(2)}</strong>
-                                </li>
-                            </ul>
-                            {
-                                isPaid ? <button className="btn btn-success w-100" onClick={confirmOrder}>Place Order</button> : <button className="btn btn-success w-100" disabled>Place Order</button>
-                            }
-
-                        </div>
+                        {isPaid ? (
+                            <button className="btn btn-success w-100 mt-2" onClick={confirmOrder}>
+                                <FaCheck className="me-2" /> Confirm Order
+                            </button>
+                        ) : (
+                            <button className="btn btn-secondary w-100 mt-2" disabled>
+                                <FaShoppingBag className="me-2" /> Confirm Order
+                            </button>
+                        )}
                     </div>
                 </div>
+
             </div>
         </div>
     );

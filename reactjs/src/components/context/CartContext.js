@@ -18,7 +18,11 @@ export const CartProvider = ({ children }) => {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 console.log("Fetched cart items:", response.data); // Debugging log
-                setCartItems(response.data || []);
+                if (Array.isArray(response.data)){
+                    setCartItems(response.data);
+                }else{
+                    setCartItems([]);
+                }
             }
            
         } catch (error) {

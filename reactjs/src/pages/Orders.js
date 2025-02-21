@@ -43,7 +43,7 @@ export default function Orders() {
 
     return (
         <>
-            <div className="container mt-5">
+            <div className="container mt-5 vh-100">
                 <h3 className="text-primary">Orders</h3>
                 <div className="table-responsive rounded-1 shadow border my-4">
                     <table className="table table-bordered table-hover mb-0">

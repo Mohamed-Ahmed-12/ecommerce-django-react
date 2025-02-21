@@ -8,41 +8,40 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true); // New state for loading
-  // Verify token validity
-  const verifyToken = useCallback(async () => {
-    try {
-        const token = localStorage.getItem("access_token");
-        if (!token) {
+    // Verify token validity
+    const verifyToken = useCallback(async () => {
+        try {
+            const token = localStorage.getItem("access_token");
+            if (!token) {
+                setIsAuthenticated(false);
+                setLoading(false);
+                return;
+            }
+
+            await axiosInstance.post("token/verify/", { token });
+            setIsAuthenticated(true);
+        } catch {
             setIsAuthenticated(false);
+        } finally {
             setLoading(false);
-            return;
         }
+    }, []);
 
-        await axiosInstance.post("token/verify/", { token });
-        setIsAuthenticated(true);
-    } catch {
-        setIsAuthenticated(false);
-    } finally {
-        setLoading(false);
-    }
-}, []);
-
-// Refresh token periodically
-const refreshToken = useCallback(async () => {
-    try {
-        const refresh = localStorage.getItem("refresh_token");
-        if (!refresh) {
+    // Refresh token periodically
+    const refreshToken = useCallback(async () => {
+        try {
+            const refresh = localStorage.getItem("refresh_token");
+            if (!refresh) {
+                setIsAuthenticated(false);
+                return;
+            }
+            const response = await axiosInstance.post("token/refresh/", { refresh });
+            localStorage.setItem("access_token", response.data.access);
+            setIsAuthenticated(true);
+        } catch {
             setIsAuthenticated(false);
-            return;
         }
-
-        const response = await axiosInstance.post("token/refresh/", { refresh });
-        localStorage.setItem("access_token", response.data.access);
-        setIsAuthenticated(true);
-    } catch {
-        setIsAuthenticated(false);
-    }
-}, []);
+    }, []);
 
     // Initial verification and refresh every 23 hour
     useEffect(() => {
@@ -54,10 +53,10 @@ const refreshToken = useCallback(async () => {
         refreshToken(); // Initial Refresh on load
 
         return () => clearInterval(interval);
-    }, [verifyToken , refreshToken]);
+    }, [verifyToken, refreshToken]);
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, loading, setIsAuthenticated ,refreshToken, verifyToken }}>
+        <AuthContext.Provider value={{ isAuthenticated, loading, setIsAuthenticated, refreshToken, verifyToken }}>
             {children}
         </AuthContext.Provider>
     );

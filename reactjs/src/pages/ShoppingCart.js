@@ -26,7 +26,7 @@ export default function ShoppingCart() {
   const totalPrice = cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
     if (!cartItems || cartItems.length === 0) {
         return (
-            <div className="container text-center mt-5">
+            <div className="container text-center mt-5 vh-100">
                 <h3>Your cart is empty</h3>
                 <p>Please add items to your cart to proceed with the checkout.</p>
                 <Link to="/store" className="bi bi-arrow-left">
@@ -37,7 +37,7 @@ export default function ShoppingCart() {
         );
     }
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 vh-100">
       <h3 className="mb-3">🛒 Shopping Cart</h3>
       <table className="table ">
         <thead className="bg-light">
