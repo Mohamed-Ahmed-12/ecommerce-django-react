@@ -38,6 +38,18 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('id','user', 'payment', 'status' , 'get_items')
     list_filter = ('status',)
     date_hierarchy = "created_at"
+    def save_model(self, request, obj, form, change):
+        if change:  # Object is being updated, not created
+            if obj.status == 'completed': # if admin make order completed will reduce the quantity of product in stock
+                for item in obj.items.all():
+                    item.product.quantity -= item.quantity
+                    item.product.save()
+            elif obj.status == 'cancelled': # if admin make order cancelled will increase the quantity of product in stock
+                for item in obj.items.all():
+                    item.product.quantity += item.quantity
+                    item.product.save()
+        super().save_model(request, obj, form, change)
+
     class Media:
         css = {
             'all': (static('admin_styles.css'),)  # Load custom CSS

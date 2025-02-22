@@ -15,7 +15,8 @@ export default function Dashboard() {
 
     }
     const styleNumberofCard = {
-        fontFamily: 'fantasy',
+        fontFamily: 'initial',
+        fontSize: 'x-large'
     }
     const StyleIcons = {
         padding: '15px',
@@ -50,7 +51,7 @@ export default function Dashboard() {
                             <LuCircleDollarSign style={StyleIcons} className='img-fluid rounded' />
                             <div className="card-body text-end">
                                 <h5 className="card-title" style={styleHeaderOfCard}>Revenue</h5>
-                                <p className="card-text" style={styleNumberofCard}>{data?.revenue} EGP</p>
+                                <p className="card-text fw-bold" style={styleNumberofCard}>{data?.revenue} EGP</p>
                             </div>
 
                         </div>
@@ -62,7 +63,7 @@ export default function Dashboard() {
                             <LuCircleDollarSign style={StyleIcons} className='img-fluid rounded' />
                             <div className="card-body text-end">
                                 <h5 className="card-title" style={styleHeaderOfCard}>In Stock</h5>
-                                <p className="card-text" style={styleNumberofCard}>{data?.products_price} EGP</p>
+                                <p className="card-text fw-bold" style={styleNumberofCard}>{data?.products_price} EGP</p>
                             </div>
 
                         </div>
@@ -74,7 +75,7 @@ export default function Dashboard() {
                             <LuShoppingCart style={StyleIcons} className='img-fluid rounded' />
                             <div className="card-body text-end">
                                 <h5 className="card-title" style={styleHeaderOfCard}>Orders</h5>
-                                <p className="card-text" style={styleNumberofCard}>{data?.orders_count}</p>
+                                <p className="card-text fw-bold" style={styleNumberofCard}>{data?.orders_count}</p>
                             </div>
 
                         </div>
@@ -86,7 +87,7 @@ export default function Dashboard() {
                             <AiFillProduct style={StyleIcons} className='img-fluid rounded' />
                             <div className="card-body text-end">
                                 <h5 className="card-title" style={styleHeaderOfCard}>Products</h5>
-                                <p className="card-text" style={styleNumberofCard}>{data?.product_count}</p>
+                                <p className="card-text fw-bold" style={styleNumberofCard}>{data?.product_count}</p>
                             </div>
                         </div>
                     </div>
@@ -97,7 +98,7 @@ export default function Dashboard() {
                             <FaUserGroup style={StyleIcons} className='img-fluid rounded' />
                             <div className="card-body text-end">
                                 <h5 className="card-title" style={styleHeaderOfCard}>Users</h5>
-                                <p className="card-text" style={styleNumberofCard}>{data?.users_count}</p>
+                                <p className="card-text fw-bold" style={styleNumberofCard}>{data?.users_count}</p>
                             </div>
                         </div>
                     </div>
