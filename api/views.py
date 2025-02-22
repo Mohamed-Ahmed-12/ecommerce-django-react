@@ -303,7 +303,7 @@ class OrderView(APIView):
     """
     View to handle Orders
     """
-    def post(self, request):
+    def post(self, request,action):
         try:
             auth_header = request.headers.get('Authorization')
             if not auth_header or ' ' not in auth_header:
@@ -319,13 +319,21 @@ class OrderView(APIView):
             
             if order:
                 items = order.items.all()
-                for item in items:
-                    item.product.quantity -= item.quantity
-                    item.product.save()
-                order.status = 'completed'
-                order.save()
-                Invoice.objects.create(invoice_number=generate_unique_invoice_number(), order=order)
-                return Response({"message": "Order Completed"}, status=status.HTTP_200_OK)
+                if action == 'confirm':
+                    for item in items:
+                        item.product.quantity -= item.quantity
+                        item.product.save()
+                    order.status = 'completed'
+                    order.save()
+                    Invoice.objects.create(invoice_number=generate_unique_invoice_number(), order=order)
+                    return Response({"message": "Order Completed"}, status=status.HTTP_200_OK)
+                elif action == 'cancel':
+                    for item in items:
+                        item.product.quantity += item.quantity
+                        item.product.save()
+                    order.status = 'cancelled'
+                    order.save()
+                    return Response({"message": "Order Cancelled"}, status=status.HTTP_200_OK)
             else:
                 return Response({"message": "Order Not Found"}, status=status.HTTP_404_NOT_FOUND)
         except ValidationError as e:

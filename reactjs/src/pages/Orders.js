@@ -5,8 +5,14 @@ import { Link } from 'react-router-dom';
 
 
 const StatusPadge = ({status='pending'})=>{
+    const statusStyle = {
+        'pending': 'badge bg-secondary',
+        'completed': 'badge bg-success',
+        'cancelled': 'badge bg-danger',
+        'failed': 'badge bg-danger',
+    }
     return(
-        status === 'completed' ? <span className="badge bg-success">{status}</span> : <span className="badge bg-secondary">{status}</span>
+        <span className={statusStyle[status]}>{status}</span>
     );
 }
 

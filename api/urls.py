@@ -28,9 +28,9 @@ urlpatterns = [
     path('reviews/add/<int:pk>/',views.ReviewView.as_view(), name='review_add' ),
     
     path('shipping-address/',views.ShippingAddressView.as_view(), name='shipping_address' ),
-    path('order/confirm/', views.OrderView.as_view(), name='confirm_order'),
+    path('order/<str:action>/', views.OrderView.as_view(), name='order_action'),
     path('orders/', views.OrderView.as_view(), name='orders'),
-    path('order/payment/', payments.PaymentAPIView.as_view(), name='create_payment'),
+    path('payment/order/', payments.PaymentAPIView.as_view(), name='create_payment'),
     path('execute-payment/', payments.ExecutePaymentAPIView.as_view(), name='execute_payment'),
 
 

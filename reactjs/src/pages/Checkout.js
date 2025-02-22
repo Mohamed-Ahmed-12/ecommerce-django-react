@@ -76,7 +76,7 @@ export default function Checkout() {
 
     const fetchOrderPayment = useCallback(async () => {
         try {
-            const response = await axiosInstance.get("order/payment/", {
+            const response = await axiosInstance.get("payment/order/", {
                 headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
             });
             console.log(response.data);
@@ -93,7 +93,7 @@ export default function Checkout() {
             try {
                 const token = localStorage.getItem("access_token");
                 const total = (subTotal + shipping).toFixed(2)
-                const response = await axiosInstance.post('order/payment/', { total, paymentOption },
+                const response = await axiosInstance.post('payment/order/', { total, paymentOption },
                     {
                         headers: {
                             Authorization: `Bearer ${token}`, // Correctly set the Authorization header
@@ -150,7 +150,20 @@ export default function Checkout() {
     const cancelOrder = async () => {
         const result = window.confirm("Are you sure to cancel this order ?");
         if (result) {
-            toast.success("Cancelled Successfully!", { position: "top-right" });
+            setIsLoading(true); // Show spinner
+            try {
+                const response = await axiosInstance.post("order/cancel/", {}, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
+                });
+                toast.success("Cancelled Successfully!", { position: "top-right" });
+                // Re-fetch cart items to update the state
+                await fetchCartItems();
+                setIsLoading(false);
+                navigate('/orders')
+            } catch (e) {
+                console.error("Error confirming order:", e);
+                toast.error("Failed to cancel the order. Please try again.");
+            }
         }
     }
     if (isLoading) return <div className="container mt-5"> <Spinner /> </div>;
