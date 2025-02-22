@@ -12,7 +12,6 @@ export default function OrderDetails({ shippingAddress, orderPayment }) {
   return (
     <div className="container">
       <div className="row g-4">
-        
         {/* Shipping Address Section */}
         <div className="col-md-6">
           <div className="p-3 text-white text-center"
@@ -33,7 +32,7 @@ export default function OrderDetails({ shippingAddress, orderPayment }) {
         </div>
 
         {/* Payment Information Section */}
-        <div className="col-md-6">
+        <div className="col-md-6 mb-3">
           <div className="p-3 text-white text-center"
                style={{ background: "linear-gradient(135deg, #28a745, #155724)", borderRadius: "5px" }}>
             <h5 className="mb-0 fw-bold">

@@ -18,7 +18,7 @@ export default function Home() {
         AOS.init();
     },[])
     return (
-        <div className="container mt-1">      
+        <div className="container">      
             {/* Carousel */}
             <div id="carouselExampleDark" className="carousel carousel-light slide my-3" data-bs-ride="carousel">
                 <div className="carousel-inner p-2">
@@ -59,7 +59,7 @@ export default function Home() {
             <Categories />
 
             {/* <!-- Brands Section --> */}
-            <section className="my-5 bg-light py-5">
+            <section className="my-5 bg-white rounded py-5">
                 <div className="container" id="brands">
                     <h2 className="text-center mb-4" style={{ fontFamily: "fantasy" }}>Brands</h2>
                     <Brands />
@@ -67,7 +67,7 @@ export default function Home() {
             </section>
 
             {/* <!-- Featured Products Section --> */}
-            <section className="my-5 bg-light py-5">
+            <section className="my-5 bg-white rounded py-5">
                 <div className="container" id="whyus">
                     <h2 className="text-center" style={{ fontFamily: "fantasy" }}>Why US</h2>
                     <div className="row">

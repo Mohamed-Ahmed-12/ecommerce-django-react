@@ -183,7 +183,7 @@ export default function Checkout() {
 
 
     return (
-        <div className='container vh-100'>
+        <div className='container min-vh-100'>
             <h3 className='mt-3'>Checkout</h3>
             <div className='row mt-3'>
                 <div className='col-sm-12 col-xl-8'>
@@ -203,7 +203,7 @@ export default function Checkout() {
                     }
                 </div>
                 {/* Order Summary Section */}
-                <div className="col-md-4">
+                <div className="col-md-4 mb-3">
                     <div className="p-3 text-white text-center"
                         style={{ background: "linear-gradient(135deg, #007bff, #0056b3)", borderRadius: "5px" }}>
                         <h5 className="mb-0 fw-bold">

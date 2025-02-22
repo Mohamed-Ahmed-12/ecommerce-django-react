@@ -27,7 +27,7 @@ function Categories() {
 
   return (
 
-    <div className="bg-light py-5">
+    <div className="bg-white rounded py-4 mt-5">
       <h2 className="text-center mb-4" style={{ fontFamily: "fantasy" }}>
         Top Categories
       </h2>
