@@ -9,7 +9,9 @@ import OrderStatus from '../dasboardcharts/OrderStatus';
 import '../dash.css';
 import SalesChart from '../dasboardcharts/SalesChart';
 import ProductsPriceHistory from '../dasboardcharts/ProductsPriceHistory';
+import { useNavigate } from 'react-router-dom';
 export default function Dashboard() {
+    const navigate = useNavigate();
     const styleHeaderOfCard = {
         fontFamily: 'sans-serif',
 
@@ -35,6 +37,9 @@ export default function Dashboard() {
                 console.log(res.data)
             }).catch((err) => {
                 console.log(err)
+                if(err.response.status===403){
+                    navigate('/not-authorized')
+                }
             })
     }, [])
     return (

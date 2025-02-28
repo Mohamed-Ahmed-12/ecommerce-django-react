@@ -143,7 +143,7 @@ function ProductList({ filters }) {
     const highlightText = (text, query) => {
         if (!query) return text;
         const regex = new RegExp(`(${query})`, 'gi'); // Create a case-insensitive regular expression for the query.
-        return text.replace(regex, (match) => `<span className="bg-warning">${match}</span>`);
+        return text.replace(regex, (match) => `<span class="bg-warning">${match}</span>`);
     };
 
     if (loading) {
@@ -157,10 +157,10 @@ function ProductList({ filters }) {
         <>
             {error && <div className="alert alert-danger">{error}</div>}
             {/* Header */}
+            <h3 style={{ fontFamily: "fantasy" }}>Store</h3>
             <div className="d-flex justify-content-between align-items-center">
-                <h3 style={{ fontFamily: "fantasy" }}>Store</h3>
-
-                <div className="input-group mx-1">
+            
+                <div className="input-group mx-auto">
                     <input
                         type="text"
                         className="form-control"

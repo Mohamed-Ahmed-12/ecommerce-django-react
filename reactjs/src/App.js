@@ -24,6 +24,7 @@ import Dashboard from "./pages/Dashboard";
 import ShoppingCart from "./pages/ShoppingCart";
 import Profile from "./pages/Profile";
 import Footer from "./components/Footer";
+import Error403 from "./pages/Error403";
 
 
 // Protected Route Component > allow authenticated user 
@@ -80,6 +81,7 @@ function App() {
           {isAuthenticated && <Nav />}
           <Routes>
             <Route path="*" element={<Error404 />} />
+            <Route path="/not-authorized" element={<Error403 />} />
             <Route path="/login" element={<PublicRoute><Forms /></PublicRoute>} />
             <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
             <Route path="/store" element={<ProtectedRoute><Store /></ProtectedRoute>} />
@@ -94,7 +96,10 @@ function App() {
             <Route path="/order/success" element={<ProtectedRoute><ConfirmOrderMessage /></ProtectedRoute>} />
           </Routes>
         </BrowserRouter>
-        <a href="#" className="m-4" id='to-top'><i className="bi bi-arrow-up-circle-fill h-5" style={{fontSize: "2.5rem", color: "rgb(255, 108, 47)"}}></i></a>
+        <div id='to-top' className="d-flex flex-column">
+        <a href="#" className="m-4" id='chat'><i className="bi bi-chat-dots-fill h-5" style={{fontSize: "2.5rem", color: "rgb(255, 108, 47)"}}></i></a>
+          <a href="#" className="m-4" ><i className="bi bi-arrow-up-circle-fill h-5" style={{fontSize: "2.5rem", color: "rgb(255, 108, 47)"}}></i></a>
+        </div>
         {/* <!-- Footer --> */}
         <Footer />
       </div>
