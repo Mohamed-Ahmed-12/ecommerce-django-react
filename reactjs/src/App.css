@@ -15,7 +15,33 @@ body {
   /* background-position: center; */
 
 }
+#profile-side {
+  list-style-type: none;
+}
+#profile-side li{
+  margin: 1rem ;
+  padding: .3rem;
+  text-align: start;
+  border-radius: .2rem;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#profile-side li:hover{
+  background-color: rgb(226, 230, 247);
+}
 
+#profile-side li a{
+  text-decoration: none !important;
+}
+
+#to-top{
+  /* arrow */
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+}
 
 @media (max-width: 768px) {
   #add-review-col {
@@ -25,4 +51,44 @@ body {
   #reviews-col {
     order: 2;
   }
+
+}
+
+@media (max-width: 576px) {
+  #profile-side {
+    margin: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  #profile-side li{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    margin: 0 0 .4rem 0 ;
+  }
+  #profile-side li a{
+    text-decoration: none !important;
+  }
+
+  #profile-side li:active{
+    background-color: rgb(226, 230, 247);
+  }
+  tbody{
+    overflow: scroll;
+  }
+  #cart-table table tbody tr td img{
+    width: 50px !important; 
+    height: 50px !important;
+    
+  }
+  .product-name , .product-price , .product-qty ,.product-total{
+    font-size: small;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  #profile-main h6{
+    font-size: small;
+
+  }
+
+
 }

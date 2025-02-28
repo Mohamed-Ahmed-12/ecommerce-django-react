@@ -37,7 +37,7 @@ const LoginForm = ({ handleChange, handleSubmit }) => (
                     onChange={handleChange}
                 />
             </div>
-            <button type="submit" className="btn btn-primary w-100 mt-3">
+            <button type="submit" className="btn btn-dark w-100 mt-3">
                 Login
             </button>
         </form>
@@ -89,13 +89,13 @@ const SignupForm = ({ handleChange, handleSubmit }) => (
                     required
                     onChange={handleChange}
                 />
-                <ul class="form-text text-danger">
+                <ul className="form-text text-danger">
                     <li>Minimum 8 characters</li>
                     <li>Lowercase and Uppercase Letters</li>
                     <li>Numbers & Symbols</li>
                 </ul>
             </div>
-            <button type="submit" className="btn btn-success w-100 mt-3">
+            <button type="submit" className="btn btn-dark w-100 mt-3">
                 Signup
             </button>
         </form>
@@ -184,7 +184,7 @@ export default function Forms() {
     return (
         <div className="container-fluid">
             <div className="row justify-content-center align-items-center" id="auth-form">
-                <div className="col-auto card shadow bg-light">
+                <div className="col-auto card shadow" style={{backgroundColor:'initial'}}>
                     <div className=" card-body d-flex flex-column justify-content-center p-4" >
                         {loading ? (
                             <Spinner />

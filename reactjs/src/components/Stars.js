@@ -14,7 +14,6 @@ export default function Stars({reviews}) {
                 Array.from(Array(5)).map((_, index) => {
                     const isHalfStar = calculateRate - index >= 0.5 && calculateRate - index < 1; // Check for half star condition
                     const isFullStar = calculateRate - index >= 1; // Check for full star condition
-
                     return (
                         <i
                             key={index}
@@ -24,8 +23,7 @@ export default function Stars({reviews}) {
                     );
                 })
             }
-
-            <span> {calculateRate} out of 5</span>
+            <span className='text-rate'> {calculateRate} out of 5</span>
         </>
 
     )

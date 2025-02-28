@@ -129,7 +129,7 @@ class PaymentAPIView(APIView):
                 payment_status = order.payment.payment_status or 'pending'
                 serializer = PaymentSerializer(order.payment)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response({'message':'no payment exist for this order'}, status=status.HTTP_200_OK)
+            return Response({'error':'no payment exist for this order'}, status=status.HTTP_200_OK)
 
         except ValidationError as ve:
             return Response({"error": str(ve)}, status=status.HTTP_400_BAD_REQUEST)

@@ -94,6 +94,7 @@ function App() {
             <Route path="/order/success" element={<ProtectedRoute><ConfirmOrderMessage /></ProtectedRoute>} />
           </Routes>
         </BrowserRouter>
+        <a href="#" className="m-4" id='to-top'><i className="bi bi-arrow-up-circle-fill h-5" style={{fontSize: "2.5rem", color: "rgb(255, 108, 47)"}}></i></a>
         {/* <!-- Footer --> */}
         <Footer />
       </div>

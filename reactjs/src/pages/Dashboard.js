@@ -51,7 +51,7 @@ export default function Dashboard() {
                             <LuCircleDollarSign style={StyleIcons} className='img-fluid rounded' />
                             <div className="card-body text-end">
                                 <h5 className="card-title" style={styleHeaderOfCard}>Revenue</h5>
-                                <p className="card-text fw-bold" style={styleNumberofCard}>{data?.revenue} EGP</p>
+                                <p className="card-text fw-bold" style={styleNumberofCard}>{Number(data?.revenue).toLocaleString()} EGP</p>
                             </div>
 
                         </div>
@@ -63,7 +63,7 @@ export default function Dashboard() {
                             <LuCircleDollarSign style={StyleIcons} className='img-fluid rounded' />
                             <div className="card-body text-end">
                                 <h5 className="card-title" style={styleHeaderOfCard}>In Stock</h5>
-                                <p className="card-text fw-bold" style={styleNumberofCard}>{data?.products_price} EGP</p>
+                                <p className="card-text fw-bold" style={styleNumberofCard}>{Number(data?.products_price).toLocaleString()} EGP</p>
                             </div>
 
                         </div>

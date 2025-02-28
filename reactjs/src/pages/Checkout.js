@@ -80,7 +80,9 @@ export default function Checkout() {
                 headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
             });
             console.log(response.data);
-            setOrderPayment(response.data);
+            if (!response.data.error){
+                setOrderPayment(response.data);
+            }
             setIsPaid(true);
         } catch (error) {
             console.error("Error fetching Payment Status:", error);
@@ -103,6 +105,7 @@ export default function Checkout() {
 
                 toast.success('Payment Successfully ')
                 setIsPaid(true);
+                fetchOrderPayment();
                 if (response.data.approval_url) {
                     window.location.href = response.data.approval_url; // Redirect to PayPal approval page
                 }
@@ -186,7 +189,7 @@ export default function Checkout() {
         <div className='container min-vh-100'>
             <h3 className='mt-3'>Checkout</h3>
             <div className='row mt-3'>
-                <div className='col-sm-12 col-xl-8'>
+                <div className='col-sm-12 col-xl-8 col-md-8'>
                     {
                         shippingAddress ?
                             (
@@ -203,7 +206,7 @@ export default function Checkout() {
                     }
                 </div>
                 {/* Order Summary Section */}
-                <div className="col-md-4 mb-3">
+                <div className="col-sm-12 col-xl-4 col-md-4 mb-3">
                     <div className="p-3 text-white text-center"
                         style={{ background: "linear-gradient(135deg, #007bff, #0056b3)", borderRadius: "5px" }}>
                         <h5 className="mb-0 fw-bold">

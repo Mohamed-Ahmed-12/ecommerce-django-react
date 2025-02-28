@@ -189,6 +189,7 @@ class Order(models.Model):
 
 
 class OrderProduct(models.Model):
+    '''Cart Items'''
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name="Quantity In Order", default=1)
@@ -210,7 +211,10 @@ class Invoice(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='invoice')
     created_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='invoices', blank=True, null=True)
-
+    def save(self , *args , **kwargs):
+        if not self.invoice_number:
+            self.invoice_number = generate_unique_invoice_number()
+        super().save(*args , **kwargs)
 
 class ProductPriceHistory(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="price_history")
@@ -294,8 +298,8 @@ def send_invoice_email(invoice_id, to_email):
 def generate_invoice_pdf_signal(sender, instance, created, **kwargs):
     if created:
         generate_pdf.delay(instance.id)
-        if instance.order.address and instance.order.address.email:
-            send_invoice_email.delay(instance.id, to_email=instance.order.address.email)
+        # if instance.order.address and instance.order.address.email:
+        #     send_invoice_email.delay(instance.id, to_email=instance.order.address.email)
 
 
 def generate_unique_invoice_number():

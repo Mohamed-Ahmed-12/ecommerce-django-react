@@ -39,7 +39,8 @@ export default function ShoppingCart() {
   return (
     <div className="container mt-4 vh-100">
       <h3 className="mb-3">🛒 Shopping Cart</h3>
-      <table className="table ">
+      <div className="table-responsive" id="cart-table">
+      <table className="table">
         <thead className="bg-light">
           <tr>
             <th>Item</th>
@@ -55,21 +56,22 @@ export default function ShoppingCart() {
             <tr key={item.id}>
               <td className="d-flex">
                 <img src={`${axiosInstance.defaults.baseURL.replace("/api/", "") + item.product.image}`} style={{ width: "125px", height: "100px" }} alt={item.name} className='img-thumbnail' />
-                <span className="ms-2">{(item.product.name).slice(0, 50)}</span>
+                <span className="ms-2 product-name">{(item.product.name).slice(0, 50)}</span>
               </td>
-              <td>${item.product.price.toFixed(2)}</td>
-              <td>
+              <td className="product-price">${item.product.price.toFixed(2)}</td>
+              <td className="product-qty">
                 <button className="btn btn-sm btn-primary me-2" onClick={()=> decreaseQuantity(item.product.id , item.quantity)} >-</button>
                 <span>{item.quantity}</span>
                 <button className="btn btn-sm btn-primary ms-2" onClick={()=>increaseQuantity(item.product.id , item.quantity)}>+</button>
               </td>
-              <td>${(item.product.price * item.quantity).toFixed(2)}</td>
+              <td className="product-total">${(item.product.price * item.quantity).toFixed(2)}</td>
               <td><button className='btn btn-sm btn-danger bi bi-trash' onClick={() => { removeCartItem(item.product.id) }}></button></td>
 
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
 
       <div className="d-flex justify-content-between align-items-center">
         <h5>Total: ${totalPrice.toFixed(2)}</h5>

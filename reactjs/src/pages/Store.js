@@ -99,7 +99,7 @@ export default function Store() {
                   <i className="bi bi-filter"></i> Filter
                 </button>
               </h2>
-              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+              <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                 <div className="accordion-body">
                   {/* Categories */}
                   <div className="my-2">

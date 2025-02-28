@@ -91,7 +91,7 @@ function ProductDetails() {
     }
 
     return (
-        <div className="container-xxl container-fluid mt-2 border">
+        <div className="container-xxl container-fluid my-2 border">
             <div className="row p-2">
                 <div className="col-md-12 col-xl-6 d-flex">
                     <div className="d-flex flex-column me-2">

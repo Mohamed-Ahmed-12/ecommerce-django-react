@@ -143,7 +143,7 @@ function ProductList({ filters }) {
     const highlightText = (text, query) => {
         if (!query) return text;
         const regex = new RegExp(`(${query})`, 'gi'); // Create a case-insensitive regular expression for the query.
-        return text.replace(regex, (match) => `<span class="bg-warning">${match}</span>`);
+        return text.replace(regex, (match) => `<span className="bg-warning">${match}</span>`);
     };
 
     if (loading) {
@@ -220,8 +220,7 @@ function ProductList({ filters }) {
                                                     <Stars reviews={product.reviews} />
                                                 </div>
 
-
-                                                <h5 className="h5 my-2">${product.price}</h5>
+                                                <h6 className="my-2 product-price">EGP{product.price}</h6>
 
                                                 {product.quantity > 0 ? (
                                                     <button
@@ -251,7 +250,7 @@ function ProductList({ filters }) {
                                                 </Link>
                                             </h6>
                                             <div className="d-flex justify-content-between align-items-center">
-                                                <span className="h5 mb-0">${product.price}</span>
+                                                <span className="mb-0 product-price">EGP {product.price}</span>
                                                 <div>
                                                     <Stars reviews={product.reviews} />
                                                 </div>
