@@ -46,7 +46,7 @@ export default function Dashboard() {
         <div className="container mt-3" >
             <div className='row'>
                 <div className='col-12'>
-                    <h4 className='d-inline-block p-1' style={{borderBottom:'3px rgb(255, 108, 47) solid'}}>Dashboard</h4>
+                    <h4 className='d-inline-block p-1' style={{fontFamily:'fantasy ', borderBottom:'3px rgb(255, 108, 47) solid'}}>Dashboard</h4>
                 </div>
             </div>
             <div className='row row-cols-sm-2 row-cols-md-4 row-cols-1 bg-white p-3 rounded my-3'>

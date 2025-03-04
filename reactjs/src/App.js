@@ -35,7 +35,6 @@ const ProtectedRoute = ({ children }) => {
   }
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
-
     return <Navigate to="/login" replace />;
   }
 
@@ -74,36 +73,38 @@ function App() {
 
   return (
 
-    <CartProvider>
-      <div className="container-fluid">
-        <BrowserRouter>
+
+    <div className="container-fluid">
+      <BrowserRouter>
+        <CartProvider>
           <ToastContainer />
-          {isAuthenticated && <Nav />}
+          <Nav />
           <Routes>
             <Route path="*" element={<Error404 />} />
             <Route path="/not-authorized" element={<Error403 />} />
             <Route path="/login" element={<PublicRoute><Forms /></PublicRoute>} />
-            <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path="/store" element={<ProtectedRoute><Store /></ProtectedRoute>} />
+            <Route path="/" element={<Home />} />
+            <Route path="/store" element={<Store />} />
             <Route path="/cart" element={<ProtectedRoute><ShoppingCart /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/product/:slug" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
+            <Route path="/product/:slug" element={<ProductDetails />} />
             <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
             <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
             <Route path="/payment/success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
             <Route path="/payment/cancel" element={<ProtectedRoute><PaymentCancel /></ProtectedRoute>} />
             <Route path="/order/success" element={<ProtectedRoute><ConfirmOrderMessage /></ProtectedRoute>} />
           </Routes>
-        </BrowserRouter>
-        <div id='to-top' className="d-flex flex-column">
-        <a href="#" className="m-4" id='chat'><i className="bi bi-chat-dots-fill h-5" style={{fontSize: "2.5rem", color: "rgb(255, 108, 47)"}}></i></a>
-          <a href="#" className="m-4" ><i className="bi bi-arrow-up-circle-fill h-5" style={{fontSize: "2.5rem", color: "rgb(255, 108, 47)"}}></i></a>
-        </div>
-        {/* <!-- Footer --> */}
-        <Footer />
+        </CartProvider>
+      </BrowserRouter>
+      <div id='to-top' className="d-flex flex-column">
+        <a href="#" className="m-4 mb-1" id='chat'><i className="bi bi-chat-dots-fill h-5" style={{ fontSize: "2.5rem", color: "rgb(255, 108, 47)" }}></i></a>
+        <a href="#" className="m-4 mt-0" ><i className="bi bi-arrow-up-circle-fill h-5" style={{ fontSize: "2.5rem", color: "rgb(255, 108, 47)" }}></i></a>
       </div>
-    </CartProvider>
+      {/* <!-- Footer --> */}
+      <Footer />
+    </div>
+
 
   );
 }

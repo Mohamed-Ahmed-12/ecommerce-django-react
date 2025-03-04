@@ -37,7 +37,7 @@ export default function Home() {
                             </section>
                         </div>
                     </div>
-                    <div className="carousel-item" data-bs-interval="2000">
+                    <div className="carousel-item" data-bs-interval="10000">
                         <img src="https://i.pinimg.com/originals/01/74/28/01742844bd9e06c2e5475bfb260339af.jpg" style={{ height: "400px", objectFit: "cover" }} className="d-block w-100 rounded-2" alt="carousel-2" />
                         <div className="carousel-caption d-none d-md-block">
                             <h5>Second slide label</h5>

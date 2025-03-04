@@ -2,13 +2,16 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axiosInstance from "../axiosInstance";
 import { toast } from "react-toastify";
+import { useAuthContext } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CartContext = createContext();
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
-
+    const { isAuthenticated } = useAuthContext();
+    const navigate = useNavigate();
     // Fetch cart items when component mounts or cartItems state changes
     const fetchCartItems = async () => {
         try {
@@ -32,6 +35,10 @@ export const CartProvider = ({ children }) => {
     };
 
     const addCartItem = async (productId, itemQty = 1) => {
+        if (!isAuthenticated){
+            navigate("/login");            
+            return;
+        }
         try {
             if (itemQty <= 0) {
                 toast.error("Please enter a valid positive number, Try again", {

@@ -54,11 +54,11 @@ export default function Navbar() {
     }
 
     return (
-        <> 
+        <>
             <nav className="navbar navbar-expand-lg bg-light ">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/" style={{ fontFamily: "sans-serif" }}>
-                    <img src="https://static.vecteezy.com/system/resources/previews/016/471/452/non_2x/abstract-modern-ecommerce-logo-ecommerce-logo-design-shop-logo-design-template-creative-ecommerce-logo-vector.jpg" alt="" width="50" height="50" />
+                        <img src="https://static.vecteezy.com/system/resources/previews/016/471/452/non_2x/abstract-modern-ecommerce-logo-ecommerce-logo-design-shop-logo-design-template-creative-ecommerce-logo-vector.jpg" alt="" width="50" height="50" />
                         eCommerce
                     </Link>
                     <button
@@ -75,17 +75,18 @@ export default function Navbar() {
 
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                         <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <Link
+                                    className="nav-link"
+                                    aria-current="page"
+                                    to="/store"
+                                >
+                                    <i className="bi bi-house" /> Store
+                                </Link>
+                            </li>
                             {isAuthenticated ? (
                                 <>
-                                    <li className="nav-item">
-                                        <Link
-                                            className="nav-link"
-                                            aria-current="page"
-                                            to="/store"
-                                        >
-                                            <i className="bi bi-house" /> Store
-                                        </Link>
-                                    </li>
+
 
                                     <li className="nav-item">
                                         <button className="nav-link " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">

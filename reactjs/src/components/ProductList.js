@@ -21,6 +21,7 @@ function ProductList({ filters }) {
     const [searchStr, setSearchStr] = useState('');
     const [offset, setOffset] = useState(2);
     const [hasMore, setHasMore] = useState(true);
+    const [hoveredProduct, setHoveredProduct] = useState(null);
     // Fetch all products on component mount
     useEffect(() => {
         const fetchProducts = async () => {
@@ -159,7 +160,7 @@ function ProductList({ filters }) {
             {/* Header */}
             <h3 style={{ fontFamily: "fantasy" }}>Store</h3>
             <div className="d-flex justify-content-between align-items-center">
-            
+
                 <div className="input-group mx-auto">
                     <input
                         type="text"
@@ -170,7 +171,7 @@ function ProductList({ filters }) {
                         onChange={(e) => setSearchStr(e.target.value)}
                         required={true}
                     />
-                    <button className="btn text-white" style={{backgroundColor:"#ff6c2f"}} type="button" onClick={productSearch}>
+                    <button className="btn text-white" style={{ backgroundColor: "#ff6c2f" }} type="button" onClick={productSearch}>
                         <i className="bi bi-search"></i>
                     </button>
                 </div>
@@ -214,8 +215,8 @@ function ProductList({ filters }) {
                                                 </h6>
                                                 <p className="text-muted">
                                                     {product.description ? product.description.slice(0, 100) + '...' : 'No description available.'}
-                                                </p>   
-                                                <p className="lead mb-1">{product.category.name}</p>                                             
+                                                </p>
+                                                <p className="lead mb-1">{product.category.name}</p>
                                                 <div>
                                                     <Stars reviews={product.reviews} />
                                                 </div>
@@ -236,8 +237,19 @@ function ProductList({ filters }) {
                                     </div>
                                 </div>
                             ) : (
-                                <div className="col-sm-6 col-lg-3 col-md-4 my-2" key={`${product.id}-${productsView}`} data-aos="zoom-in">
-                                    <div className="card">
+                                <div className="col-sm-6 col-lg-3 col-md-4 my-2" key={`${product.id}-${productsView}`} data-aos="zoom-in" onMouseEnter={() => setHoveredProduct(product.id)} onMouseLeave={() => setHoveredProduct(null)} >
+                                    <div className="card position-relative">
+                                        <div className={`position-absolute z-2 top-0 end-0 m-2 d-flex flex-column transition-opacity ${hoveredProduct===product.id ? "d-flex" : "d-none"}`}>
+                                            <button
+                                                className="btn btn-outline-primary btn-sm bi bi-cart-plus rounded-circle mb-2"
+                                                onClick={() => handleAddToCart(product.id)}
+                                            >
+                                            </button>
+
+                                            <button
+                                                className="btn btn-outline-danger btn-sm bi bi-heart rounded-circle">
+                                            </button>
+                                        </div>
                                         <ProductGallary images={[product.image, product.image2, product.image3]} />
                                         <div className="card-body">
                                             <p className="lead">{product.category.name}</p>
@@ -256,7 +268,7 @@ function ProductList({ filters }) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="card-footer d-flex justify-content-between bg-light">
+                                        {/* <div className="card-footer d-flex justify-content-between bg-light">
                                             {product.quantity > 0 ? (
                                                 <>
                                                     <button
@@ -271,7 +283,7 @@ function ProductList({ filters }) {
                                             ) : (
                                                 <h6 className="text-danger">Out of Stock</h6>
                                             )}
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             )
